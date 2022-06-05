@@ -8,8 +8,6 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [flashMsg, setFlashMsg] = useState('')
-  const [isError, setIsError] = useState(null)
 
   // see if user exists
   let localUser = JSON.parse(
@@ -32,10 +30,6 @@ const App = () => {
           // handleLogin = {handleLogin}
           setBlogs = {setBlogs}
           setUser = {setUser}
-          flashMsg = {flashMsg}
-          setFlashMsg = {setFlashMsg}
-          isError = {isError}
-          setIsError = {setIsError}
         />
       )
     } else {
@@ -44,7 +38,7 @@ const App = () => {
           user = {user}
           setUser = {setUser}
           blogs = {blogs}
-          setBlogs = {setBlogs}
+          setBlogs = {setBlogs}      
         />
       )
     }
