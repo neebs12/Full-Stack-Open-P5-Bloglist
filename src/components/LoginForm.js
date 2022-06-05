@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
+import FlashMessage from './FlashMessage'
 
 const handleGenericInputChange = hook => { // pfa
   return event => hook(event.target.value)
 }
 
 const LoginForm = ({
-  setBlogs, setUser
+  setBlogs, setUser,
+  flashMsg, setFlashMsg,
+  isError, setIsError
 }) => { 
   // username and password controlled states
   const [username, setUsername] = useState('')
@@ -31,14 +34,26 @@ const LoginForm = ({
       setUser(user)
       setUsername('') //clears information from form
       setPassword('')
+
+      // flash message
+      setIsError(false)
+      setFlashMsg('Successfully logged in: ', user.username)
+
     } catch (e) {
-      console.error('login unsuccessful', e)
+      setIsError(true)
+      setFlashMsg('Incorrect username or password')
     }
   }  
   
   // this will have a form
   return (
   <div>
+    <h2>log in application</h2>
+    <FlashMessage 
+      isError = {isError}
+      flashMsg = {flashMsg}
+      setFlashMsg = {setFlashMsg}
+    />
     <form onSubmit={handleLogin}>
       <div>
         username

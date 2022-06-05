@@ -5,13 +5,17 @@ import LoggedIn from './components/LoggedIn'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
+  const [flashMsg, setFlashMsg] = useState('')
+  const [isError, setIsError] = useState(null)
 
   // see if user exists
-  let localUser = JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+  let localUser = JSON.parse(
+    window.localStorage.getItem('loggedBlogAppUser')
+  )
+
   if (localUser && !user) {
     blogService.getUserSpecificBlogs(localUser).then(blogs => {
       blogService.setToken(localUser)
@@ -28,6 +32,10 @@ const App = () => {
           // handleLogin = {handleLogin}
           setBlogs = {setBlogs}
           setUser = {setUser}
+          flashMsg = {flashMsg}
+          setFlashMsg = {setFlashMsg}
+          isError = {isError}
+          setIsError = {setIsError}
         />
       )
     } else {
@@ -44,7 +52,6 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
       {toggleLogin()} 
     </div>
   )

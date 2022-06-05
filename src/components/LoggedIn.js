@@ -10,6 +10,7 @@ const LoggedIn = ({
   
   return (
   <div>
+    <h2>blogs</h2>
     <p>
       {user.username} is logged in
       <button onClick={() => {
