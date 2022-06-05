@@ -16,6 +16,7 @@ const App = () => {
   let localUser = JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
   if (localUser && !user) {
     blogService.getUserSpecificBlogs(localUser).then(blogs => {
+      blogService.setToken(localUser)
       setUser(localUser)
       setBlogs(blogs)
     })
@@ -61,15 +62,18 @@ const App = () => {
           user = {user}
           setUser = {setUser}
           blogs = {blogs}
+          setBlogs = {setBlogs}
         />
       )
     }
   }
 
+
+
   return (
     <div>
       <h2>blogs</h2>
-      {toggleLogin()}
+      {toggleLogin()} 
     </div>
   )
 }

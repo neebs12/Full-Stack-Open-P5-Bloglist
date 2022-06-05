@@ -24,6 +24,19 @@ const getUserSpecificBlogs = async (user) => {
   return filteredResponse
 }
 
-let exportObj = { getAll, setToken, getUserSpecificBlogs } 
+const addNewBlog = async (blog) => {
+  const config = {
+    headers: { // remember this!
+      'Content-Type': 'application/json',
+      Authorization: token
+    }
+  }
+
+  console.log(token)
+  const response = await axios.post(baseUrl, blog, config)
+  return response.data
+}
+
+let exportObj = { getAll, setToken, getUserSpecificBlogs, addNewBlog } 
 
 export default exportObj
