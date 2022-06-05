@@ -9,6 +9,15 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  // see if user exists
+  let localUser = JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+  if (localUser && !user) {
+    blogService.getUserSpecificBlogs(localUser).then(blogs => {
+      setUser(localUser)
+      setBlogs(blogs)
+    })
+  }
+
   const handleLogin = async (event) => { // this will be an async cb
     event.preventDefault()
     let credentials = { username, password }
@@ -17,8 +26,12 @@ const App = () => {
       // console.log('logging in', user)
       // now that we have the user (successfully, this is where we get all the relevant blogs)
       blogService.setToken(user) // set this as token on service
-      let blogs = await blogService.getUserSpecificBlogs(user)
-      setBlogs(blogs)
+      let specificBlogs = await blogService.getUserSpecificBlogs(user)
+      
+      // locally store
+      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
+
+      setBlogs(specificBlogs)
       setUser(user)
       setUsername('') //clears information from form
       setPassword('')
@@ -68,7 +81,16 @@ const App = () => {
     <div>
       <p>
         {user.username} is logged in
+        <button onClick={() => {
+          window.localStorage.clear()
+          setUser(null) // change state, trigger re-render 
+        }}>
+          logout
+        </button>
       </p>
+      {blogs.map(blog =>
+        <Blog key={blog.id} blog={blog} />
+      )}      
     </div>
     )
   }
@@ -79,10 +101,7 @@ const App = () => {
       {user === null ? 
         loginFormComponent() : 
         loggedInComponent()
-      }
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      }      
     </div>
   )
 }
