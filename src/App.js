@@ -8,8 +8,6 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   // see if user exists
@@ -22,38 +20,14 @@ const App = () => {
     })
   }
 
-  const handleLogin = async (event) => { // this will be an async cb
-    event.preventDefault()
-    let credentials = { username, password }
-    try {
-      let user = await loginService.login(credentials)
-      // console.log('logging in', user)
-      // now that we have the user (successfully, this is where we get all the relevant blogs)
-      blogService.setToken(user) // set this as token on service
-      let specificBlogs = await blogService.getUserSpecificBlogs(user)
-      
-      // locally store
-      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-
-      setBlogs(specificBlogs)
-      setUser(user)
-      setUsername('') //clears information from form
-      setPassword('')
-    } catch (e) {
-      console.error('login unsuccessful', e)
-    }
-  }
-
   const toggleLogin = () => {
     // can no longer do inline due to required params
     if (user === null) {
       return (
         <LoginForm 
-          handleLogin = {handleLogin}
-          username = {username}
-          setUsername = {setUsername}
-          password = {password}
-          setPassword = {setPassword}
+          // handleLogin = {handleLogin}
+          setBlogs = {setBlogs}
+          setUser = {setUser}
         />
       )
     } else {
@@ -67,8 +41,6 @@ const App = () => {
       )
     }
   }
-
-
 
   return (
     <div>
