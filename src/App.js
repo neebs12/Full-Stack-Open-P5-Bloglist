@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import LoginForm from './components/LoginForm'
+import LoggedIn from './components/LoggedIn'
 import blogService from './services/blogs'
 import loginService from './services/login'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -40,68 +43,33 @@ const App = () => {
     }
   }
 
-  const handleGenericInputChange = hook => { // pfa
-    return event => hook(event.target.value)
-  }
-
-  // these components will be optionally rendered
-  // loginFormComponent for if user === null
-  // loggedInFormComponent for if user !== null
-  const loginFormComponent = () => { 
-    // this will have a form
-    return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input 
-            type="text"
-            value={username}
-            name="Username"
-            onChange={handleGenericInputChange(setUsername)}
-          />
-        </div>
-        <div>
-          password
-          <input 
-            type="text"
-            value={password}
-            name="Password"
-            onChange={handleGenericInputChange(setPassword)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
-    )
-  }
-
-  const loggedInComponent = () => {
-    return (
-    <div>
-      <p>
-        {user.username} is logged in
-        <button onClick={() => {
-          window.localStorage.clear()
-          setUser(null) // change state, trigger re-render 
-        }}>
-          logout
-        </button>
-      </p>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}      
-    </div>
-    )
+  const toggleLogin = () => {
+    // can no longer do inline due to required params
+    if (user === null) {
+      return (
+        <LoginForm 
+          handleLogin = {handleLogin}
+          username = {username}
+          setUsername = {setUsername}
+          password = {password}
+          setPassword = {setPassword}
+        />
+      )
+    } else {
+      return (
+        <LoggedIn 
+          user = {user}
+          setUser = {setUser}
+          blogs = {blogs}
+        />
+      )
+    }
   }
 
   return (
     <div>
       <h2>blogs</h2>
-      {user === null ? 
-        loginFormComponent() : 
-        loggedInComponent()
-      }      
+      {toggleLogin()}
     </div>
   )
 }
