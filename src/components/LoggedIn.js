@@ -5,7 +5,7 @@ import blogService from '../services/blogs'
 
 const LoggedIn = ({
   user, setUser,
-  blogs, setBlogs
+  blogs, setBlogs,
 }) => {
   
   return (

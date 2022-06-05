@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
+import FlashMessage from './FlashMessage'
 
 const CreateForm = ({
   blogs, setBlogs
@@ -8,6 +9,8 @@ const CreateForm = ({
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [flashMsg, setFlashMsg] = useState('')
+  const [isError, setIsError] = useState(null)   
 
   const createBlogHandler = async (event) => {
     event.preventDefault()
@@ -23,8 +26,13 @@ const CreateForm = ({
       setTitle('')
       setAuthor('')
       setUrl('')
+
+      setIsError(false) // setting successful blog addition message
+      setFlashMsg(`Successfully created blog: ${blog.title} by: ${blog.author}`)
     } catch (e) {
-      console.error('form not added: ', e)
+      // console.error('form not added: ', e)
+      setIsError(true) // setting failed blog addition message
+      setFlashMsg(`Unable to created blog`)
     }
   }
 
@@ -40,7 +48,12 @@ const CreateForm = ({
 
   return (
   <div>
-    <form onSubmit={createBlogHandler}>
+    <FlashMessage 
+      isError = {isError}
+      flashMsg = {flashMsg}
+      setFlashMsg = {setFlashMsg}
+    />
+    <form onSubmit = {createBlogHandler}>
       <div>
         title: {genericControlledInput(title, setTitle)}
       </div>

@@ -9,12 +9,12 @@ const handleGenericInputChange = hook => { // pfa
 
 const LoginForm = ({
   setBlogs, setUser,
-  flashMsg, setFlashMsg,
-  isError, setIsError
 }) => { 
   // username and password controlled states
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [flashMsg, setFlashMsg] = useState('')
+  const [isError, setIsError] = useState(null)  
 
   // this will have the login
   const handleLogin = async (event) => { // this will be an async cb
