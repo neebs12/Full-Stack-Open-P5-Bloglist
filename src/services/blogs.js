@@ -3,8 +3,8 @@ const baseUrl = '/api/blogs'
 
 let token = null
 
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`
+const setToken = (user) => {
+  token = `bearer ${user.token}`
 }
 
 const getAll = () => {
@@ -24,6 +24,6 @@ const getUserSpecificBlogs = async (user) => {
   return filteredResponse
 }
 
-let exportObj = { getAll, getUserSpecificBlogs } 
+let exportObj = { getAll, setToken, getUserSpecificBlogs } 
 
 export default exportObj

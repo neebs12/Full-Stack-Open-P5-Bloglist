@@ -13,12 +13,13 @@ const App = () => {
     event.preventDefault()
     let credentials = { username, password }
     try {
-      let response = await loginService.login(credentials)
-      // console.log('logging in', response)
-      // now that we have the response (successfully, this is where we get all the relevant blogs)
-      let blogs = await blogService.getUserSpecificBlogs(response)
+      let user = await loginService.login(credentials)
+      // console.log('logging in', user)
+      // now that we have the user (successfully, this is where we get all the relevant blogs)
+      blogService.setToken(user) // set this as token on service
+      let blogs = await blogService.getUserSpecificBlogs(user)
       setBlogs(blogs)
-      setUser(response)
+      setUser(user)
       setUsername('') //clears information from form
       setPassword('')
     } catch (e) {
