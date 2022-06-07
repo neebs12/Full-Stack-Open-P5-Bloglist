@@ -43,7 +43,7 @@ const App = () => {
             setBlogs = {setBlogs}      
           />        
           <h2>create new</h2>
-          <Toggleable buttonName="new note">
+          <Toggleable displayButtonName="new note" hideButtonName = "cancel">
             <CreateForm 
               blogs = {blogs}
               setBlogs = {setBlogs}              

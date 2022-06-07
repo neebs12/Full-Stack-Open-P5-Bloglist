@@ -10,13 +10,13 @@ const Toggleable = (props) => {
     <div>
       <div style={displayMeWhenHidden}> 
         <button onClick={() => setVisibility(!visibility)}>
-          {props.buttonName}
+          {props.displayButtonName}
         </button>
       </div>
       <div style={displayMeWhenVisible}>
         {props.children}
         <button onClick={() => setVisibility(!visibility)}>
-          cancel
+        {props.hideButtonName}
         </button>
       </div>
     </div>
