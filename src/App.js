@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import CreateForm from './components/CreateForm'
 import LoginForm from './components/LoginForm'
 import LoggedIn from './components/LoggedIn'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -34,12 +36,23 @@ const App = () => {
       )
     } else {
       return (
-        <LoggedIn 
-          user = {user}
-          setUser = {setUser}
-          blogs = {blogs}
-          setBlogs = {setBlogs}      
-        />
+        <div>
+          <LoggedIn 
+            user = {user}
+            setUser = {setUser}
+            setBlogs = {setBlogs}      
+          />        
+          <h2>create new</h2>
+          <Toggleable buttonName="new note">
+            <CreateForm 
+              blogs = {blogs}
+              setBlogs = {setBlogs}              
+            />
+          </Toggleable>
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}                   
+        </div>  
       )
     }
   }

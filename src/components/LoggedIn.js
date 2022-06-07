@@ -21,14 +21,6 @@ const LoggedIn = ({
         logout
       </button>
     </p>  
-    <h2>create new</h2>
-    <CreateForm 
-      blogs = {blogs}
-      setBlogs = {setBlogs}
-    />
-    {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
-    )}         
   </div>
   )
 }
