@@ -35,6 +35,23 @@ const addNewBlog = async (blog) => {
   return response.data
 }
 
-let exportObj = { getAll, setToken, getUserSpecificBlogs, addNewBlog } 
+const updateABlog = async (id, blog) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token
+    }
+  }
+  const response = await axios.put(`${baseUrl}/${id}`, blog, config)
+  return response.data
+}
+
+let exportObj = { 
+  getAll, 
+  setToken, 
+  getUserSpecificBlogs, 
+  addNewBlog,
+  updateABlog 
+} 
 
 export default exportObj
