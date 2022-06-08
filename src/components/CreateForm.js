@@ -11,7 +11,7 @@ const CreateForm = ({
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [flashMsg, setFlashMsg] = useState('')
-  const [isError, setIsError] = useState(null)   
+  const [isError, setIsError] = useState(null)
 
   const createBlogHandler = async (event) => {
     event.preventDefault()
@@ -20,7 +20,7 @@ const CreateForm = ({
     let newBlog = { title, author, url }
     try {
       // create a service to accomodate the added blog post
-      // BlogService contains a private token variable 
+      // BlogService contains a private token variable
       let blog = await blogServices.addNewBlog(newBlog)
       // let newBlogs = [...blogs].concat([blog]) // abstracted copy and concat
       let updateBlogs = await blogServices.getUserSpecificBlogs(
@@ -36,13 +36,13 @@ const CreateForm = ({
     } catch (e) {
       // console.error('form not added: ', e)
       setIsError(true) // setting failed blog addition message
-      setFlashMsg(`Unable to created blog`)
+      setFlashMsg('Unable to created blog')
     }
   }
 
   const genericControlledInput = (state, stateChange) => {
     return (
-      <input 
+      <input
         type = "text"
         value = {state}
         onChange = {(event) => stateChange(event.target.value)}
@@ -51,25 +51,25 @@ const CreateForm = ({
   }
 
   return (
-  <div>
-    <FlashMessage 
-      isError = {isError}
-      flashMsg = {flashMsg}
-      setFlashMsg = {setFlashMsg}
-    />
-    <form onSubmit = {createBlogHandler}>
-      <div>
+    <div>
+      <FlashMessage
+        isError = {isError}
+        flashMsg = {flashMsg}
+        setFlashMsg = {setFlashMsg}
+      />
+      <form onSubmit = {createBlogHandler}>
+        <div>
         title: {genericControlledInput(title, setTitle)}
-      </div>
-      <div>
+        </div>
+        <div>
         author: {genericControlledInput(author, setAuthor)}
-      </div>
-      <div>
+        </div>
+        <div>
         url: {genericControlledInput(url, setUrl)}
-      </div>
-      <button type="submit">create</button>
-    </form>
-  </div>
+        </div>
+        <button type="submit">create</button>
+      </form>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 const FlashMessage = ({
-  isError, 
+  isError,
   flashMsg, setFlashMsg
 }) => {
   let color = isError ? 'red' : 'green'
@@ -16,7 +16,7 @@ const FlashMessage = ({
     return (<div></div>)
   } else {
     // flash message persists for 5 seconds
-    setTimeout(() => setFlashMsg(''), 5000) 
+    setTimeout(() => setFlashMsg(''), 5000)
     return (
       <div style={myComponentStyle}>
         {flashMsg}

@@ -1,12 +1,12 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import blogServices from '../services/blogs'
 
-const Blog = ({blog, setBlogs}) => {
-  // cannot use toggleable component directly 
+const Blog = ({ blog, setBlogs }) => {
+  // cannot use toggleable component directly
   // -- as button does not appear adjacent to blog
   const [visibility, setVisibility] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
-  const displayVisibility = {display: visibility ? '' : 'none'}
+  const displayVisibility = { display: visibility ? '' : 'none' }
   const buttonName = visibility ? 'view' : 'hide'
 
   const blogStyle = {
@@ -40,7 +40,7 @@ const Blog = ({blog, setBlogs}) => {
     // alert -- confirmation of deletion
     let title = blog.title
     let author = blog.author
-    if (!window.confirm(`Remove blog: ${title} by ${author}`)) return;
+    if (!window.confirm(`Remove blog: ${title} by ${author}`)) return
     // get the id
     let id = blog.id
     // scrutinize deletion
@@ -53,11 +53,11 @@ const Blog = ({blog, setBlogs}) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author} 
+      {blog.title} {blog.author}
       <button onClick={() => setVisibility(!visibility)}>{buttonName}</button>
       <div style={displayVisibility}>
         {blog.url} <br></br>
-        likes {likes} 
+        likes {likes}
         <button onClick={likeHandler}>
           like
         </button><br></br>
@@ -66,7 +66,7 @@ const Blog = ({blog, setBlogs}) => {
           remove
         </button>
       </div>
-    </div>  
+    </div>
   )
 }
 

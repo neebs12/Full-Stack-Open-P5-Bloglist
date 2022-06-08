@@ -18,7 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:server": "cd ../bloglist-backend && npm start"
+    "start:server": "cd ../bloglist-backend && npm start",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [

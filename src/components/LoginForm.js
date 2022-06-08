@@ -9,12 +9,12 @@ const handleGenericInputChange = hook => { // pfa
 
 const LoginForm = ({
   setBlogs, setUser,
-}) => { 
+}) => {
   // username and password controlled states
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [flashMsg, setFlashMsg] = useState('')
-  const [isError, setIsError] = useState(null)  
+  const [isError, setIsError] = useState(null)
 
   // this will have the login
   const handleLogin = async (event) => { // this will be an async cb
@@ -26,7 +26,7 @@ const LoginForm = ({
       // now that we have the user (successfully, this is where we get all the relevant blogs)
       blogService.setToken(user) // set this as token on service
       let specificBlogs = await blogService.getUserSpecificBlogs(user)
-      
+
       // locally store
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
 
@@ -43,39 +43,39 @@ const LoginForm = ({
       setIsError(true)
       setFlashMsg('Incorrect username or password')
     }
-  }  
-  
+  }
+
   // this will have a form
   return (
-  <div>
-    <h2>log in application</h2>
-    <FlashMessage 
-      isError = {isError}
-      flashMsg = {flashMsg}
-      setFlashMsg = {setFlashMsg}
-    />
-    <form onSubmit={handleLogin}>
-      <div>
+    <div>
+      <h2>log in application</h2>
+      <FlashMessage
+        isError = {isError}
+        flashMsg = {flashMsg}
+        setFlashMsg = {setFlashMsg}
+      />
+      <form onSubmit={handleLogin}>
+        <div>
         username
-        <input 
-          type="text"
-          value={username}
-          name="Username"
-          onChange={handleGenericInputChange(setUsername)}
-        />
-      </div>
-      <div>
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={handleGenericInputChange(setUsername)}
+          />
+        </div>
+        <div>
         password
-        <input 
-          type="text"
-          value={password}
-          name="Password"
-          onChange={handleGenericInputChange(setPassword)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  </div>
+          <input
+            type="text"
+            value={password}
+            name="Password"
+            onChange={handleGenericInputChange(setPassword)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+    </div>
   )
 }
 

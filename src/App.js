@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Blog from './components/Blog'
 import CreateForm from './components/CreateForm'
 import LoginForm from './components/LoginForm'
 import LoggedIn from './components/LoggedIn'
 import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
-import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -28,7 +27,7 @@ const App = () => {
     // can no longer do inline due to required params
     if (user === null) {
       return (
-        <LoginForm 
+        <LoginForm
           // handleLogin = {handleLogin}
           setBlogs = {setBlogs}
           setUser = {setUser}
@@ -37,35 +36,35 @@ const App = () => {
     } else {
       return (
         <div>
-          <LoggedIn 
+          <LoggedIn
             user = {user}
             setUser = {setUser}
-            setBlogs = {setBlogs}      
-          />        
+            setBlogs = {setBlogs}
+          />
           <h2>create new</h2>
           <Toggleable displayButtonName="new note" hideButtonName = "cancel">
-            <CreateForm 
-              setBlogs = {setBlogs}              
+            <CreateForm
+              setBlogs = {setBlogs}
             />
           </Toggleable>
           {[...blogs]
             .sort((a, b) => b.likes - a.likes)
             .map(blog =>
-              <Blog 
-                key={blog.id} // warning: this is not a prop! this is for REACT 
+              <Blog
+                key={blog.id} // warning: this is not a prop! this is for REACT
                 blog={blog}
-                blogs={blogs} setBlogs={setBlogs} 
+                blogs={blogs} setBlogs={setBlogs}
               />
             )
-          }                   
-        </div>  
+          }
+        </div>
       )
     }
   }
 
   return (
     <div>
-      {toggleLogin()} 
+      {toggleLogin()}
     </div>
   )
 }

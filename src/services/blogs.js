@@ -53,16 +53,16 @@ const deleteABlog = async (id) => {
     }
   }
   const response = await axios.delete(`${baseUrl}/${id}`, config)
-  return response.data 
+  return response.data
 }
 
-let exportObj = { 
-  getAll, 
-  setToken, 
-  getUserSpecificBlogs, 
+let exportObj = {
+  getAll,
+  setToken,
+  getUserSpecificBlogs,
   addNewBlog,
   updateABlog,
   deleteABlog
-} 
+}
 
 export default exportObj
