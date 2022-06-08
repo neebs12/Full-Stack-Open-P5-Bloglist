@@ -29,7 +29,9 @@ const Blog = ({blog, blogs, setBlogs}) => {
     copiedBlog.likes = copiedBlog.likes + 1
     // send update to the server
     await blogServices.updateABlog(id, copiedBlog)
-    let updateBlogs = await blogServices.getAll() // lol shortcut
+    let updateBlogs = await blogServices.getUserSpecificBlogs(
+      JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+    ) // lol shortcut
     setLikes(likes + 1)
     setBlogs(updateBlogs)
   }
