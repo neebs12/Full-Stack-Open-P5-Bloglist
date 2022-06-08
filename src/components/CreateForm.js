@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import blogServices from '../services/blogs'
+import PropTypes from 'prop-types'
 import FlashMessage from './FlashMessage'
 
 const CreateForm = ({
-  blogs, setBlogs, user
+  setBlogs
 }) => {
   // title, author and url
   const [title, setTitle] = useState('')
@@ -70,6 +71,10 @@ const CreateForm = ({
     </form>
   </div>
   )
+}
+
+CreateForm.propTypes = {
+  setBlogs: PropTypes.func.isRequired
 }
 
 export default CreateForm
