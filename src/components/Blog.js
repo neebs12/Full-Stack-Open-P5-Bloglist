@@ -33,7 +33,7 @@ const Blog = ({blog, blogs, setBlogs}) => {
       JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
     ) // lol shortcut
     setLikes(likes + 1)
-    setBlogs(updateBlogs)
+    setBlogs(updateBlogs.sort((a, b) => b.likes - a.likes))
   }
 
   return (

@@ -20,7 +20,7 @@ const App = () => {
     blogService.getUserSpecificBlogs(localUser).then(blogs => {
       blogService.setToken(localUser)
       setUser(localUser)
-      setBlogs(blogs)
+      setBlogs(blogs.sort((a, b) => b.likes - a.likes))
     })
   }
 
