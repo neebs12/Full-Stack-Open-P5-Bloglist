@@ -20,7 +20,7 @@ const App = () => {
     blogService.getUserSpecificBlogs(localUser).then(blogs => {
       blogService.setToken(localUser)
       setUser(localUser)
-      setBlogs(blogs.sort((a, b) => b.likes - a.likes))
+      setBlogs(blogs)
     })
   }
 
@@ -49,13 +49,16 @@ const App = () => {
               setBlogs = {setBlogs}              
             />
           </Toggleable>
-          {blogs.map(blog =>
-            <Blog 
-              key={blog.id} // warning: this is not a prop! this is for REACT 
-              blog={blog}
-              blogs={blogs} setBlogs={setBlogs} 
-            />
-          )}                   
+          {[...blogs]
+            .sort((a, b) => b.likes - a.likes)
+            .map(blog =>
+              <Blog 
+                key={blog.id} // warning: this is not a prop! this is for REACT 
+                blog={blog}
+                blogs={blogs} setBlogs={setBlogs} 
+              />
+            )
+          }                   
         </div>  
       )
     }

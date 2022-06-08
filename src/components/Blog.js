@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import blogServices from '../services/blogs'
 
-const Blog = ({blog, blogs, setBlogs}) => {
+const Blog = ({blog, setBlogs}) => {
   // cannot use toggleable component directly 
   // -- as button does not appear adjacent to blog
   const [visibility, setVisibility] = useState(false)
@@ -29,11 +29,26 @@ const Blog = ({blog, blogs, setBlogs}) => {
     copiedBlog.likes = copiedBlog.likes + 1
     // send update to the server
     await blogServices.updateABlog(id, copiedBlog)
-    let updateBlogs = await blogServices.getUserSpecificBlogs(
+    let updatedBlogs = await blogServices.getUserSpecificBlogs(
       JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
     ) // lol shortcut
     setLikes(likes + 1)
-    setBlogs(updateBlogs.sort((a, b) => b.likes - a.likes))
+    setBlogs(updatedBlogs)
+  }
+
+  const deleteHandler = async () => {
+    // alert -- confirmation of deletion
+    let title = blog.title
+    let author = blog.author
+    if (!window.confirm(`Remove blog: ${title} by ${author}`)) return;
+    // get the id
+    let id = blog.id
+    // scrutinize deletion
+    await blogServices.deleteABlog(id)
+    let updatedBlogs = await blogServices.getUserSpecificBlogs(
+      JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+    )
+    setBlogs(updatedBlogs)
   }
 
   return (
@@ -47,6 +62,9 @@ const Blog = ({blog, blogs, setBlogs}) => {
           like
         </button><br></br>
         {blog.user.username}<br></br>
+        <button onClick={deleteHandler}>
+          remove
+        </button>
       </div>
     </div>  
   )

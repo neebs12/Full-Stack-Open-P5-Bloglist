@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import blogServices from '../services/blogs'
 import FlashMessage from './FlashMessage'
 
 const CreateForm = ({
-  blogs, setBlogs
+  blogs, setBlogs, user
 }) => {
   // title, author and url
   const [title, setTitle] = useState('')
@@ -20,9 +20,12 @@ const CreateForm = ({
     try {
       // create a service to accomodate the added blog post
       // BlogService contains a private token variable 
-      let blog = await blogService.addNewBlog(newBlog)
-      let newBlogs = [...blogs].concat([blog]) // abstracted copy and concat
-      setBlogs(newBlogs)
+      let blog = await blogServices.addNewBlog(newBlog)
+      // let newBlogs = [...blogs].concat([blog]) // abstracted copy and concat
+      let updateBlogs = await blogServices.getUserSpecificBlogs(
+        JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+      )
+      setBlogs(updateBlogs)
       setTitle('')
       setAuthor('')
       setUrl('')
