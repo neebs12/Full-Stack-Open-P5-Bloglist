@@ -53,7 +53,7 @@ const App = () => {
               <Blog
                 key={blog.id} // warning: this is not a prop! this is for REACT
                 blog={blog}
-                blogs={blogs} setBlogs={setBlogs}
+                setBlogs={setBlogs}
               />
             )
           }

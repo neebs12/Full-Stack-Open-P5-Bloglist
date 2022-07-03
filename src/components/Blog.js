@@ -50,7 +50,6 @@ const Blog = ({ blog, setBlogs }) => {
     )
     setBlogs(updatedBlogs)
   }
-
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author}
