@@ -44,7 +44,7 @@ describe('testing Blog', () => {
     expect(element).toBeDefined()
   })
 
-  test('displays title and author, but not url or number of likes', () => {
+  test('does not display url or number of likes by default', () => {
     // ARRANGE
     // <--- in beforeEach
     
@@ -68,5 +68,18 @@ describe('testing Blog', () => {
     expect(haveUsername).toBeDefined()
     expect(haveUrl).toBeDefined()
     expect(haveLikes).toBeDefined()
+  })
+
+  test('displays url, number of likes when pressing display button', async () => {
+    // ARRANGE
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    const element = container.querySelector('.hidden')
+
+    // ACT
+    await user.click(button)
+    
+    // ASSERT
+    expect(element).not.toHaveStyle('display: none')
   })
 })

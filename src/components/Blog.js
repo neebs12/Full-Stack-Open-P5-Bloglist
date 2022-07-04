@@ -7,7 +7,7 @@ const Blog = ({ blog, setBlogs }) => {
   const [visibility, setVisibility] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
   const displayVisibility = { display: visibility ? '' : 'none' }
-  const buttonName = visibility ? 'view' : 'hide'
+  const buttonName = visibility ? 'hide' : 'view'
 
   const blogStyle = {
     paddingTop: 10,
