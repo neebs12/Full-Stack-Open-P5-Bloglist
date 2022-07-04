@@ -55,7 +55,7 @@ const LoginForm = ({
         setFlashMsg = {setFlashMsg}
       />
       <form onSubmit={handleLogin}>
-        <div>
+        <div className="input-username">
         username
           <input
             type="text"
@@ -64,7 +64,7 @@ const LoginForm = ({
             onChange={handleGenericInputChange(setUsername)}
           />
         </div>
-        <div>
+        <div className="input-password">
         password
           <input
             type="text"

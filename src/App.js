@@ -83,6 +83,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>Welcome to Blogs Application!</h1>
       {toggleLogin()}
     </div>
   )
