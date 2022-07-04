@@ -23,6 +23,14 @@ const App = () => {
     })
   }
 
+  const updateABlog = async (id, newBlog) => {
+    await blogService.updateABlog(id, newBlog)
+    const updatedBlogs = await blogService.getUserSpecificBlogs(
+      JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+    )
+    setBlogs(updatedBlogs)
+  }
+
   const toggleLogin = () => {
     // can no longer do inline due to required params
     if (user === null) {
@@ -53,6 +61,7 @@ const App = () => {
               <Blog
                 key={blog.id} // warning: this is not a prop! this is for REACT
                 blog={blog}
+                updateABlog={updateABlog}
                 setBlogs={setBlogs}
               />
             )

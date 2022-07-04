@@ -26,7 +26,7 @@ describe('testing Blog', () => {
     mockHandler = jest.fn()
 
     container = render(
-      <Blog blog={blog} setBlogs={mockHandler}/>
+      <Blog blog={blog} updateABlog={mockHandler}/>
     ).container
   })
 
@@ -73,13 +73,29 @@ describe('testing Blog', () => {
   test('displays url, number of likes when pressing display button', async () => {
     // ARRANGE
     const user = userEvent.setup()
-    const button = screen.getByText('view')
+    const viewButton = screen.getByText('view')
     const element = container.querySelector('.hidden')
 
     // ACT
-    await user.click(button)
-    
+    await user.click(viewButton)
+
     // ASSERT
     expect(element).not.toHaveStyle('display: none')
+  })
+
+  test('if like button is clicked twice, the passed handler is called twice', async () => {
+    // ARRANGE
+    const user = userEvent.setup()
+    const likeButton = screen.getByText('like')
+    // const viewButton = screen.getByText('view')
+    screen.debug(likeButton)
+
+    // ACT
+    // await user.click(viewButton) // <--- display view first?
+    await user.click(likeButton)
+    await user.click(likeButton)
+
+    // ASSERT
+    expect(mockHandler).toBeCalledTimes(2)
   })
 })

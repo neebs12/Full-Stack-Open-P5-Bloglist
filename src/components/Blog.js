@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import blogServices from '../services/blogs'
 
-const Blog = ({ blog, setBlogs }) => {
+const Blog = ({ blog, updateABlog, setBlogs }) => {
   // cannot use toggleable component directly
   // -- as button does not appear adjacent to blog
   const [visibility, setVisibility] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
+  // const [likes, setLikes] = useState(blog.likes)
   const displayVisibility = { display: visibility ? '' : 'none' }
   const buttonName = visibility ? 'hide' : 'view'
 
@@ -17,7 +17,7 @@ const Blog = ({ blog, setBlogs }) => {
     marginBottom: 5
   }
 
-  const likeHandler = async () => {
+  const likeHandler = () => {
     // we have blog, need to deep copy for REACT convention
     let copiedBlog = JSON.parse(JSON.stringify(blog))
     // need to extract existing id
@@ -28,12 +28,7 @@ const Blog = ({ blog, setBlogs }) => {
     // need to increment likes
     copiedBlog.likes = copiedBlog.likes + 1
     // send update to the server
-    await blogServices.updateABlog(id, copiedBlog)
-    let updatedBlogs = await blogServices.getUserSpecificBlogs(
-      JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
-    ) // lol shortcut
-    setLikes(likes + 1)
-    setBlogs(updatedBlogs)
+    updateABlog(id, copiedBlog) // <--- from props
   }
 
   const deleteHandler = async () => {
@@ -56,7 +51,7 @@ const Blog = ({ blog, setBlogs }) => {
       <button onClick={() => setVisibility(!visibility)}>{buttonName}</button>
       <div style={displayVisibility} className='hidden'>
         {blog.url} <br></br>
-        likes {likes}
+        likes {blog.likes}
         <button onClick={likeHandler}>
           like
         </button><br></br>
