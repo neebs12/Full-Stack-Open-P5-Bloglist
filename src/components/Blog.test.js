@@ -88,7 +88,7 @@ describe('testing Blog', () => {
     const user = userEvent.setup()
     const likeButton = screen.getByText('like')
     // const viewButton = screen.getByText('view')
-    screen.debug(likeButton)
+    // screen.debug(likeButton)
 
     // ACT
     // await user.click(viewButton) // <--- display view first?

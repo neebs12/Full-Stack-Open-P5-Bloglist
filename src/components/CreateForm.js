@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import blogServices from '../services/blogs'
+// import blogServices from '../services/blogs'
 import PropTypes from 'prop-types'
 import FlashMessage from './FlashMessage'
 
 const CreateForm = ({
-  setBlogs
+  addABlog
 }) => {
   // title, author and url
   const [title, setTitle] = useState('')
@@ -15,24 +15,14 @@ const CreateForm = ({
 
   const createBlogHandler = async (event) => {
     event.preventDefault()
-    // console.log('form submitted!')
-    // create a new blogObject
-    let newBlog = { title, author, url }
     try {
-      // create a service to accomodate the added blog post
-      // BlogService contains a private token variable
-      let blog = await blogServices.addNewBlog(newBlog)
-      // let newBlogs = [...blogs].concat([blog]) // abstracted copy and concat
-      let updateBlogs = await blogServices.getUserSpecificBlogs(
-        JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
-      )
-      setBlogs(updateBlogs)
+      await addABlog(title, author, url)
       setTitle('')
       setAuthor('')
       setUrl('')
 
       setIsError(false) // setting successful blog addition message
-      setFlashMsg(`Successfully created blog: ${blog.title} by: ${blog.author}`)
+      setFlashMsg(`Successfully created blog: ${title} by: ${author}`)
     } catch (e) {
       // console.error('form not added: ', e)
       setIsError(true) // setting failed blog addition message
@@ -58,13 +48,13 @@ const CreateForm = ({
         setFlashMsg = {setFlashMsg}
       />
       <form onSubmit = {createBlogHandler}>
-        <div>
+        <div className='title-input'>
         title: {genericControlledInput(title, setTitle)}
         </div>
-        <div>
+        <div className='author-input'>
         author: {genericControlledInput(author, setAuthor)}
         </div>
-        <div>
+        <div className='url-input'>
         url: {genericControlledInput(url, setUrl)}
         </div>
         <button type="submit">create</button>
@@ -74,7 +64,7 @@ const CreateForm = ({
 }
 
 CreateForm.propTypes = {
-  setBlogs: PropTypes.func.isRequired
+  addABlog: PropTypes.func.isRequired
 }
 
 export default CreateForm

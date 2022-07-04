@@ -31,6 +31,15 @@ const App = () => {
     setBlogs(updatedBlogs)
   }
 
+  const addABlog = async (title, author, url) => {
+    const newBlog = { title, author, url }
+    await blogService.addNewBlog(newBlog)
+    const updatedBlogs = await blogService.getUserSpecificBlogs(
+      JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+    )
+    setBlogs(updatedBlogs)
+  }
+
   const toggleLogin = () => {
     // can no longer do inline due to required params
     if (user === null) {
@@ -52,17 +61,18 @@ const App = () => {
           <h2>create new</h2>
           <Toggleable displayButtonName="new note" hideButtonName = "cancel">
             <CreateForm
-              setBlogs = {setBlogs}
+              // setBlogs = {setBlogs}
+              addABlog = {addABlog}
             />
           </Toggleable>
           {[...blogs]
             .sort((a, b) => b.likes - a.likes)
             .map(blog =>
               <Blog
-                key={blog.id} // warning: this is not a prop! this is for REACT
-                blog={blog}
-                updateABlog={updateABlog}
-                setBlogs={setBlogs}
+                key = {blog.id} // warning: this is not a prop! this is for REACT
+                blog ={blog}
+                updateABlog = {updateABlog}
+                setBlogs = {setBlogs}
               />
             )
           }
