@@ -54,7 +54,7 @@ const Blog = ({ blog, setBlogs }) => {
     <div style={blogStyle}>
       {blog.title} {blog.author}
       <button onClick={() => setVisibility(!visibility)}>{buttonName}</button>
-      <div style={displayVisibility}>
+      <div style={displayVisibility} className='hidden'>
         {blog.url} <br></br>
         likes {likes}
         <button onClick={likeHandler}>

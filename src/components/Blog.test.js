@@ -6,37 +6,35 @@ import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('testing Blog', () => {
-  test('blog renders', () => {
-    // ARRANGE
-    /* Shape of the object being tested
-    {
-      author: "hellas"
-      id: "62929fcedc6c26305d5ddf43"
-      likes: 40
-      title: "journey from 230-239"
-      url: "https://ls.com"
-      user: {
-        username: 'hellas', 
-        name: 'arto hellas', 
-        id: '62929ef6dc6c26305d5ddf3c'
-      }
-    }
-    */    
-    const blog = {
+  let container
+  let mockHandler
+
+  beforeEach(() => {
+    const blog = { 
       author: 'jason', 
       id: '1',
       likes: 10,
       title: 'this is the title!',
       url: 'http://localhost:3000',
       user: {
-        username: 'jason',
+        username: 'jason_232',
         name: 'jason ari',
         id: '1'
       }
     }
-    const mockHandler = jest.fn()
+
+    mockHandler = jest.fn()
+
+    container = render(
+      <Blog blog={blog} setBlogs={mockHandler}/>
+    ).container
+  })
+
+  test('blog renders', () => {
+    // ARRANGE 
+    // <--- in beforeEach
+
     // ACT
-    render(<Blog blog={blog} setBlogs={mockHandler}/>)
     const element = screen.getByText(
       'this is the title!', 
       {exact: false}
@@ -45,5 +43,30 @@ describe('testing Blog', () => {
     // ASSERT
     expect(element).toBeDefined()
   })
-  test.todo('displays title and author, but not url or number of likes')
+
+  test('displays title and author, but not url or number of likes', () => {
+    // ARRANGE
+    // <--- in beforeEach
+    
+    // ACT
+    const element = container.querySelector('.hidden')
+    const haveUsername = screen.getByText(
+      'jason_232', 
+      {exact: false}
+    )
+    const haveUrl = screen.getByText(
+      'http://localhost:3000',
+      {exact: false}
+    )
+    const haveLikes = screen.getByText(
+      '10',
+      {exact: false}
+    )
+
+    // ASSERT
+    expect(element).toHaveStyle('display: none')
+    expect(haveUsername).toBeDefined()
+    expect(haveUrl).toBeDefined()
+    expect(haveLikes).toBeDefined()
+  })
 })
