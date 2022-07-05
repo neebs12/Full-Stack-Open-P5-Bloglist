@@ -105,5 +105,32 @@ describe('Blog app', function () {
       cy.wait(1000) // <--- 1 sec wait for network update
       cy.contains('.blog', 'likes 2')
     })
+
+    it('a user can delete a blog', function () {
+      // ARRANGE (a blog)
+      cy.contains('new note').click() // has to be clicked
+      cy.addBlog({
+        title: 'cypress blog!',
+        author: 'isaac sotelo',
+        url: 'https://www.sotelo.com',
+      })     
+      cy.wait(1000) // <--- 1 sec for network update 
+      cy.addBlog({
+        title: 'another cypress blog!',
+        author: 'jemimah ari',
+        url: 'https://www.ari.io'
+      })
+
+      // ACT
+      cy.contains('button', 'view').click()
+
+      // ASSERT
+      // ---> that theres one blog present
+      cy.get('.blog').should('have.length', 2)
+
+      cy.contains('button', 'remove').click()
+      cy.wait(1000) // <--- 1 sec for network update 
+      cy.get('.blog').should('have.length', 1)
+    })
   })
 })
