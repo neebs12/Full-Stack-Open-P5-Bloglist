@@ -46,7 +46,7 @@ const Blog = ({ blog, updateABlog, setBlogs }) => {
     setBlogs(updatedBlogs)
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title} {blog.author}
       <button onClick={() => setVisibility(!visibility)}>{buttonName}</button>
       <div style={displayVisibility} className='hidden'>

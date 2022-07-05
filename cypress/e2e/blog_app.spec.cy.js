@@ -12,6 +12,7 @@ describe('Blog app', function () {
         password: 'pasta_is_yummy'
       }
       
+      // ---> user creation
       return cy.request('POST', 'http://localhost:3000/api/users', user)
     })
     .then(() => {
@@ -42,6 +43,39 @@ describe('Blog app', function () {
       cy.get('#login-button').click()  
       
       cy.contains('Incorrect username or password')
+    })
+  })
+
+  describe('When logged in', function () {
+    beforeEach(function () {
+      // login the user here -- use custom commands
+      cy.login({
+        username: 'jason_232',
+        password: 'pasta_is_yummy',
+      })
+    })
+
+    it('a blog can be created', function () {
+      // create a new blog here
+  
+      // ACT
+      cy.contains('new note').click() // has to be clicked
+      cy.addBlog({
+        title: 'cypress blog!',
+        author: 'isaac sotelo',
+        url: 'https://www.sotelo.com',
+      })
+      cy.addBlog({
+        title: 'another cypress blog!',
+        author: 'jemimah ari',
+        url: 'https://www.ari.io'
+      })
+      
+      // ASSERT
+      // <--- test on the notification
+      cy.contains('Successfully created blog: cypress blog! by: isaac sotelo')
+      // found one blog
+      cy.get('.blog').should('have.length', 2)
     })
   })
 })
