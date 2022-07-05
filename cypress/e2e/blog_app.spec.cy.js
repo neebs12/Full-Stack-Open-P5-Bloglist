@@ -65,17 +65,45 @@ describe('Blog app', function () {
         author: 'isaac sotelo',
         url: 'https://www.sotelo.com',
       })
+      cy.wait(1000) 
+      // <--- wait for 1 sec to wait for network
       cy.addBlog({
         title: 'another cypress blog!',
         author: 'jemimah ari',
         url: 'https://www.ari.io'
       })
-      
       // ASSERT
       // <--- test on the notification
       cy.contains('Successfully created blog: cypress blog! by: isaac sotelo')
       // found one blog
       cy.get('.blog').should('have.length', 2)
+    })
+
+    it('a user can like a blog', function() {
+      // ARRANGE (a blog)
+      cy.contains('new note').click() // has to be clicked
+      cy.addBlog({
+        title: 'cypress blog!',
+        author: 'isaac sotelo',
+        url: 'https://www.sotelo.com',
+      })
+      cy.wait(1000) // <--- wait for 1 sec to wait for network
+
+      // ACT
+      cy.contains('button', 'view').click()
+
+      // ASSERT, there are zero likes intially
+      cy.contains('.blog', 'likes 0')
+
+      // get the like button
+      cy.contains('button', 'like').click()
+      cy.wait(1000) // <--- 1 sec wait for network update
+      cy.contains('.blog', 'likes 1')
+
+      // second press
+      cy.contains('button', 'like').click()
+      cy.wait(1000) // <--- 1 sec wait for network update
+      cy.contains('.blog', 'likes 2')
     })
   })
 })
